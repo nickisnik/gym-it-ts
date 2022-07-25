@@ -1,0 +1,103 @@
+.exercise_wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.5rem;
+    font-family: Ubuntu;
+    font-size: 1rem;
+    background-color: white;
+    color: black;
+}
+
+.name {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 1rem auto 2rem auto;
+}
+
+.sets {
+    font-size: 2rem;
+    margin-top: 3rem;
+}
+
+.set_list {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+    padding: 0;
+    list-style: none;
+    gap: 1rem;
+}
+
+.set_item {
+    /* border: 3px solid rgb(210, 210, 210); */
+    border-radius: 15px;
+    padding: 2rem 1rem;
+    color: black;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 5px 10px 1px rgba(190, 190, 190, 0.463);
+    background-color: rgb(247, 247, 247);
+
+}
+.set_number_wrapper {
+    background-color: rgb(215, 215, 215);
+    border-radius: 50%;
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+}
+
+.current_set {
+    background-color: rgb(174, 201, 216);
+    background-color: rgb(127, 75, 210);
+    box-shadow: 0px 5px 10px 1px rgba(190, 190, 190, 0.463);
+    color: white;
+    transition: 200ms linear;
+/*     background: linear-gradient(260deg, rgb(255, 255, 255), rgb(167, 167, 210)); */
+}
+
+.current_set .set_number_wrapper {
+    background-color: rgba(255, 255, 255, 0.111);
+    color: white;
+}
+.set_number {
+    font-weight: 600;
+    margin: auto;
+}
+
+.reps_title {
+    font-size: 1.2rem;
+}
+
+.x {
+    margin: auto;
+    font-weight: 700;
+}
+
+.reps_input, .weight_input {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.111);
+    margin: 0;
+    padding: 0;
+    width: 20vw;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    border: none;
+    color: inherit;
+}
+
+.weight_input {
+    margin-left: auto;
+    text-align: center;
+}
+
+.reps_input:focus {
+    border: none;
+    outline: none;
+}
+
+.reps_input option {
+    color: black;
+}

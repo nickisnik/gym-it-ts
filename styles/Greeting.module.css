@@ -1,0 +1,63 @@
+.greeting_wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    color: black;
+    font-family: Ubuntu;
+}
+.greeting_name {
+    font-size: 1.1rem;
+    font-weight: 300;
+
+}
+
+.greeting_title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    line-height: 2.2rem;
+}
+.stats_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 2rem;
+    /* border: 2px solid rgb(184, 184, 184); */
+    width: 100%;
+    height: 15vh;
+    border-radius: 25px;
+    justify-content: space-around;
+    padding: 0.7rem;
+    background-color: rgb(127, 75, 210);
+    color: white;
+}
+
+.stats_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* .stats_section:nth-child(2) {
+    border-right: 2px solid rgba(180, 180, 180, 0.252);
+    border-left: 2px solid rgba(180, 180, 180, 0.252);
+} */
+
+.stat__section_title {
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+.stat__section_detail {
+    font-size: 1.3rem;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.111);
+    border-radius: 10px;
+    padding: 0.5rem 0.7rem;
+}
+
+.stat_metric_unit {
+    font-size: 1.1rem;
+    font-weight: 300;
+}

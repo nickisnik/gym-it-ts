@@ -1,0 +1,25 @@
+.navbar_container {
+    display: flex;
+    padding: 1rem 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu_icon {
+    color: grey;
+}
+
+.profile_photo_wrapper {
+    position: relative;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile_photo {
+    object-fit: cover;
+    transform: translateZ(0px);
+    image-rendering: optimizeQuality;
+}
+

@@ -23,9 +23,9 @@ const PresetBoxes = () => {
     ]
   return (
     <div className={styles.preset_boxes_list}>
-        {presets.map((item) => {
+        {presets.map((item, index) => {
             return (
-                <Link href="/session">
+                <Link href="/session" key={index}>
                     <div className={styles.preset_box}>
                         <div className={styles.preset_img} >
                         <img src="/squat.jpg" alt="" />

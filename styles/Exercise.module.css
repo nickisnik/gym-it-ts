@@ -43,6 +43,7 @@
 }
 .set_number_wrapper {
     background-color: rgb(215, 215, 215);
+    color: black;
     border-radius: 50%;
     display: flex;
     width: 2rem;
@@ -58,15 +59,24 @@
 /*     background: linear-gradient(260deg, rgb(255, 255, 255), rgb(167, 167, 210)); */
 }
 
-.current_set .set_number_wrapper {
+.current_set > .set_number_wrapper {
     background-color: rgba(255, 255, 255, 0.111);
     color: white;
 }
+
+
 .set_number {
     font-weight: 600;
     margin: auto;
+    color: inherit;
+    line-height: inherit;
+    user-select: none;
+    cursor: pointer;
 }
 
+.set_delete_btn {
+    color: red;
+}
 .reps_title {
     font-size: 1.2rem;
 }
@@ -99,5 +109,34 @@
 }
 
 .reps_input option {
+    color: black;
+}
+
+.add_set_btn {
+    width: fit-content;
+    margin: 0 auto;
+    height: 2rem;
+    width: 2rem;
+}
+
+.plus_svg {
+    color: rgba(128, 128, 128, 0.163);
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.name_input {
+    font-family: inherit;
+    width: 100%;
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+    border: none;
+    font-style: italic;
+    background-color: inherit;
     color: black;
 }

@@ -12,6 +12,7 @@ const NavBar = () => {
               <rect y="9" width="25" height="3" rx="1.5" fill="currentColor"/>
           </svg>
         </Link>
+        <span className={styles.logo}>Gym-It</span>
         <div className={styles.profile_photo_wrapper}>
             <Image src='/profile.jpeg' layout="fill" className={styles.profile_photo} />
         </div>

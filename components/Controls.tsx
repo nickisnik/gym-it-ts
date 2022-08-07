@@ -7,7 +7,7 @@ const Controls = ({currExercise, exerciseData, setCurrExercise, setExerciseData}
         // Previous
         if(control === 'previous') {
           if(currExercise === 0) return
-          setCurrExercise((curr : any) => curr - 1)
+          setCurrExercise((prev: [number, number]) => [prev[0] - 1, -1])
           return
         }  
         // Add new exercise
@@ -16,7 +16,7 @@ const Controls = ({currExercise, exerciseData, setCurrExercise, setExerciseData}
             return
         }
         // Next
-        setCurrExercise((curr : any) => curr + 1)
+        setCurrExercise((prev: [number, number]) => [prev[0] + 1, 1])
     }
     const addExercise = () => {
         const tempData = [...exerciseData]
@@ -26,7 +26,7 @@ const Controls = ({currExercise, exerciseData, setCurrExercise, setExerciseData}
             weight: [10]
         })
         setExerciseData(tempData)
-        setCurrExercise((prev:number) => prev + 1)
+        setCurrExercise((prev: [number, number]) => [prev[0] + 1, 1])
     }
 
     return (

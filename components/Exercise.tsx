@@ -1,66 +1,54 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Controls from './Controls'
+import SetList from './SetList'
 import styles from '../styles/Exercise.module.css'
+import { motion, AnimatePresence } from "framer-motion"
 const exerciseJson = require('./exercises.json')
+const exercises = exerciseJson.exercises
 
 const Exercise = () => {
-
-    const [currExercise, setCurrExercise] = useState(0);
-    const exercises = exerciseJson.exercises
-
-
     type ExerciseData = {
         name: string,
         sets: number[],
         weight: number[]
     }
     
+    const [[currExercise, direction], setCurrExercise] = useState([0, 0]);
     const [exerciseData, setExerciseData] = useState<ExerciseData[] | null>(null)
-    
-
-    const [currentSet, setCurrentSet] = useState(0);
-    const [editMode, setEditMode] = useState(false)
+    //const [currentSet, setCurrentSet] = useState(0);
     const [exerciseName, setExerciseName] = useState('')
-    
-    const handleChangeRep = (e : any, index: number) => {
-        if(!exerciseData) return
-        let temp = [...exerciseData]
-        temp[currExercise].sets[index] = Number(e.target.value);
-        setExerciseData(temp)
-    }
-    const handleChangeWeight = (e : any, index: number) => {
-        if(!exerciseData) return
-        let temp = [...exerciseData]
-        temp[currExercise].weight[index] = Number(e.target.value);
-        setExerciseData(temp)
-    }
-    const handleSelect = (index : number) => {
-        setCurrentSet(index)
-    }
+    const nameRef = useRef<HTMLInputElement | null>(null)
+
+
+    const [nameEdit, setNameEdit] = useState(false)
+    useEffect(() => {
+        // When in edit mode
+        if(nameEdit) {
+            if(!exerciseData) return
+            setExerciseName(exerciseData[currExercise].name)
+
+            // Automatically focus on the input once it appears
+            if(nameRef.current) {
+                nameRef.current.focus()
+            }
+        }   
+        // If exiting edit mode
+        if(!nameEdit) {
+            if(!exerciseData) return
+            const temp = [...exerciseData]
+            temp[currExercise].name = exerciseName;
+            setExerciseData(temp)
+        }
+    }, [nameEdit])
+    // const handleSelect = (index : number) => {
+    //     setCurrentSet(index)
+    // }
     const addSet = () => {
         if(!exerciseData) return
         const temp = [...exerciseData]
         temp[currExercise].sets.push(1)
         temp[currExercise].weight.push(0)
         setExerciseData(temp)
-    }
-    const handleDoubleClick = () => {
-        setEditMode((prev) => !prev)
-    }
-    const handleSetDelete = (setIndex : number) => {
-        if(!exerciseData) return
-        if(editMode) {
-            const tempData = [...exerciseData] 
-            // Delete selected reps and weight column
-            tempData[currExercise].sets.splice(setIndex, 1)
-            tempData[currExercise].weight.splice(setIndex, 1)
-            // Delete exercise if all sets are removed
-            if(tempData[currExercise].sets.length === 0) {
-                tempData.splice(currExercise, 1)
-                setCurrExercise((prev) => prev - 1)
-            }
-            setExerciseData(tempData)
-        }
     }
     const handleNameChange = (e : any) => {
         setExerciseName(e.target.value)
@@ -82,62 +70,86 @@ const Exercise = () => {
                 "exercises": exerciseData
             })
         }
+        console.log('data updated')
     }, [exerciseData])
+    
+    // To determine the swipe direction
+    const previousExercise = useRef<any>()
+    //const direction = currExercise > previousExercise.current ? 1 : -1
     useEffect(() => {
-        setEditMode(false)
-        if(!exerciseData) return
-        setExerciseName(exerciseData[currExercise].name)
+        previousExercise.current = currExercise
+        console.log(direction)
     }, [currExercise])
+    const variants = {
+        enter: (direction: number) => {
+          return {
+            x: direction > 0 ? 400 : -400,
+            opacity: 0
+          };
+        },
+        center: {
+          zIndex: 1,
+          x: 0,
+          opacity: 1
+        },
+        exit: (direction: number) => {
+          return {
+            zIndex: 0,
+            x: direction < 0 ? 400 : -400,
+            opacity: 0
+          };
+        }
+      };
+
+      const changeExercise = (newIndex: number) => {
+        if(newIndex === - 1 && currExercise === 0) return
+        if(newIndex === 1 && currExercise === exercises.length - 1) return
+        setCurrExercise((prev) => [prev[0] + newIndex, newIndex])
+      }
+    //
+
 
     // Save new name when exiting edit mode
-    useEffect(() => {
-        if(!exerciseData) return
-        const temp = [...exerciseData]
-        temp[currExercise].name = exerciseName;
-        setExerciseData(temp)
-    }, [editMode])
 
-    const plusSVG = <svg onClick={addSet} className={styles.plus_svg} fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="150px" height="150px">    <path d="M25,2C12.317,2,2,12.317,2,25s10.317,23,23,23s23-10.317,23-23S37.683,2,25,2z M37,26H26v11h-2V26H13v-2h11V13h2v11h11V26z"/></svg>
-
-    const editableName = editMode ? <input className={styles.name_input} type="text" onChange={handleNameChange} value={exerciseName} /> : exerciseData && exerciseData[currExercise].name
+     const editableName = (nameEdit ?
+        <input className={styles.name_input} ref={nameRef} type="text" onChange={handleNameChange} value={exerciseName} onBlur={() => setNameEdit(false)} /> 
+        :
+        <span onClick={() => setNameEdit(true)} className={styles.name}>
+            {exerciseData && exerciseData[currExercise]?.name}
+        </span>)
 
   return (
-    <div className={styles.exercise_wrapper}>
-        <span onDoubleClick={handleDoubleClick} className={styles.name}>{editableName}</span>
-
-        <ul className={styles.set_list}>
-            {exerciseData && exerciseData[currExercise]["sets"].map((reps: number, index: number) => {
-                return (
-                    <li onDoubleClick={handleDoubleClick} onClick={() => handleSelect(index)} className={currentSet === index ? `${styles.set_item} ${styles.current_set}` : `${styles.set_item}`} key={index}>
-
-                        <div onClick={() => handleSetDelete(index)} className={!editMode ? `${styles.set_number_wrapper}` : `${styles.set_number_wrapper} ${styles.set_delete_btn}`}><span className={styles.set_number}>{!editMode ? index + 1 : 'x'}</span></div>
-                        
-                        <select value={exerciseData[currExercise].sets[index]} className={styles.reps_input} onChange={(e) => handleChangeRep(e, index)}>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                        <span className={styles.reps_title}>reps</span>
-                        <span className={styles.x}>x</span>
-                        <input className={styles.weight_input} onChange={(e) => handleChangeWeight(e, index)} value={exerciseData[currExercise].weight[index]} type="number" />
-                        <span className={styles.reps_title}>kg</span>
-                    </li>
-                )
-            })}
-        </ul>
-        {plusSVG}
-        <Controls currExercise={currExercise} setCurrExercise={setCurrExercise} exerciseData={exerciseData} setExerciseData={setExerciseData} />
-
+    <>
+    <Controls currExercise={currExercise} setCurrExercise={setCurrExercise} exerciseData={exerciseData} setExerciseData={setExerciseData} />
+    <div>
+        <AnimatePresence exitBeforeEnter initial={false} custom={direction}>
+                <motion.div
+                        drag="x"
+                        dragConstraints={{left: 0, right: 0}}
+                        dragElastic={1}
+                        onDragEnd={(e, { offset, velocity }) => {
+                            if(offset.x > 80) {
+                                changeExercise(-1)
+                            } else if (offset.x < -80) {
+                                changeExercise(1)
+                            }
+                        }}
+                        custom={direction}
+                        variants={variants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        key={currExercise}
+                        transition={{duration: 0.15}}
+                        className={styles.exercise_wrapper}>
+                    {editableName}
+                    <SetList currExercise={currExercise} setCurrExercise={setCurrExercise} exerciseData={exerciseData} setExerciseData={setExerciseData} />
+                    <svg onClick={addSet} className={styles.plus_svg} fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="150px" height="150px">    <path d="M25,2C12.317,2,2,12.317,2,25s10.317,23,23,23s23-10.317,23-23S37.683,2,25,2z M37,26H26v11h-2V26H13v-2h11V13h2v11h11V26z"/></svg>
+                </motion.div>
+        </AnimatePresence>
     </div>
+
+    </>
   )
 }
 

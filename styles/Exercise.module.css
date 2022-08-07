@@ -8,10 +8,29 @@
     color: black;
 }
 
+.motion_wrapper {
+   /*  display: flex; */
+
+}
+
 .name {
     font-size: 3rem;
     font-weight: 700;
     margin: 1rem auto 2rem auto;
+    text-align: center;
+}
+
+.name_input {
+    font-family: inherit;
+    width: 100%;
+    padding: 0;
+    margin: 1rem auto 2rem auto;
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+    border: none;
+    background-color: inherit;
+    color: black;
 }
 
 .sets {
@@ -39,8 +58,8 @@
     align-items: center;
     box-shadow: 0px 5px 10px 1px rgba(190, 190, 190, 0.463);
     background-color: rgb(247, 247, 247);
-
 }
+
 .set_number_wrapper {
     background-color: rgb(215, 215, 215);
     color: black;
@@ -128,15 +147,3 @@
     cursor: pointer;
 }
 
-.name_input {
-    font-family: inherit;
-    width: 100%;
-    margin: 0;
-    font-size: 3rem;
-    font-weight: 700;
-    text-align: center;
-    border: none;
-    font-style: italic;
-    background-color: inherit;
-    color: black;
-}

@@ -36,7 +36,7 @@ const PresetBoxes = () => {
         {presets && presets.map((item : any, index : any) => {
             return (
                 <Link href={`/presets/${index}`} key={index}>
-                    <div className={styles.preset_box}>
+                    <div className={styles.preset_box} key={index}>
                         <div className={styles.preset_img} >
                         <img src="/squat.jpg" alt="" />
                         </div>

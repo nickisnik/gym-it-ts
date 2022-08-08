@@ -1,31 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../styles/PresetList.module.css'
 import Link from 'next/link'
+const json = require('./exercises.json')
 
 const PresetBoxes = () => {
+    type Data = {
+        presets: {}[]
+    }
+    const [data, setData] = useState<Data | null>(null)
+    useEffect(() => {
+        const localData = localStorage.getItem('exerciseData') 
+        if(localData) {
+            console.log(typeof(localData))
+            setData(JSON.parse(localData))
+        } else {
+            localStorage.exerciseData = JSON.stringify(json)
+        }
+        
+    }, [])
+    const presets = data?.presets
 
-    const presets = [
-        {
-            name: "Legs",
-            exercises: 10,
-            next: true    
-        },
-        {
-            name: "Push",
-            exercises: 7,
-            next: false    
-        },
-        {
-            name: "Pull",
-            exercises: 6,
-            next: false    
-        },
-    ]
+    const handleAdd = () => {
+        if(!data) return
+        let temp = {...data};
+        temp.presets.push({
+            name: 'New preset',
+            exercises: [{name: 'new', sets: [], weight: []}]
+        })
+        localStorage.exerciseData = JSON.stringify(temp)
+        setData(temp)
+    }
+
   return (
     <div className={styles.preset_boxes_list}>
-        {presets.map((item, index) => {
+        {presets && presets.map((item : any, index : any) => {
             return (
-                <Link href="/session" key={index}>
+                <Link href={`/presets/${index}`} key={index}>
                     <div className={styles.preset_box}>
                         <div className={styles.preset_img} >
                         <img src="/squat.jpg" alt="" />
@@ -34,13 +44,14 @@ const PresetBoxes = () => {
                             <span className={styles.preset_name}>
                                 {item.name}
                             </span>
-                            <span className={styles.preset_exercises}>{item.exercises} exercises</span>
-                            {item.next? <span className={styles.preset_upcoming}>Upcoming</span> : ''}
+                            <span className={styles.preset_exercises}>{item.exercises.length} exercises</span>
+                            <span className={styles.preset_upcoming}>Upcoming</span>
                         </div>
                     </div>
                 </Link>
             )
         })}
+        <button className={styles.add_preset} onClick={handleAdd}>Add preset</button>
     </div>
   )
 }

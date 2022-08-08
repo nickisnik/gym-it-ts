@@ -8,7 +8,14 @@
 
 .menu_icon {
     color: grey;
+    min-height: 50%;
     width: 50px;
+    cursor: pointer;
+    transition: 300ms;
+}
+
+.menu_icon:hover {
+    color: black;
 }
 
 .profile_photo_wrapper {

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import styles from '../styles/Exercise.module.css'
 import { motion, AnimatePresence } from "framer-motion"
 
-const SetList = ({currExercise, setCurrExercise, exerciseData, setExerciseData} : any) => {
+const SetList = ({currExercise, exerciseData, setExerciseData} : any) => {
     const weight = exerciseData && exerciseData[currExercise]?.weight;
     const sets = exerciseData && exerciseData[currExercise]?.sets;
     const [editMode, setEditMode] = useState(false)
@@ -30,7 +30,13 @@ const SetList = ({currExercise, setCurrExercise, exerciseData, setExerciseData} 
     const handleDoubleClick = () => {
         setEditMode((prev) => !prev)
     }
-
+    const addSet = () => {
+        if(!exerciseData) return
+        const temp = [...exerciseData]
+        temp[currExercise].sets.push(1)
+        temp[currExercise].weight.push(0)
+        setExerciseData(temp)
+    }
     const handleSetDelete = (setIndex : number) => {
         if(!exerciseData) return
         if(editMode) {
@@ -41,7 +47,6 @@ const SetList = ({currExercise, setCurrExercise, exerciseData, setExerciseData} 
             // Delete exercise if all sets are removed
             if(tempData[currExercise].sets.length === 0) {
                 tempData.splice(currExercise, 1)
-                setCurrExercise((prev : [number, number]) => [prev[0] - 1, -1])
             }
             setExerciseData(tempData)
         }
@@ -55,6 +60,7 @@ const SetList = ({currExercise, setCurrExercise, exerciseData, setExerciseData} 
    
 
   return (
+    <>
     <ul className={styles.set_list}>
         {exerciseData && sets?.map((reps: number, index: number) => {
             return (
@@ -86,6 +92,8 @@ const SetList = ({currExercise, setCurrExercise, exerciseData, setExerciseData} 
             })}
         
     </ul>
+    <svg onClick={addSet} className={styles.plus_svg} fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="150px" height="150px">    <path d="M25,2C12.317,2,2,12.317,2,25s10.317,23,23,23s23-10.317,23-23S37.683,2,25,2z M37,26H26v11h-2V26H13v-2h11V13h2v11h11V26z"/></svg>
+    </>
   )
 }
 

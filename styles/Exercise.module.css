@@ -2,17 +2,35 @@
     display: flex;
     flex-direction: column;
     padding: 0 1.5rem;
+    height: fit-content;
+    min-width: 100vw;
     font-family: Ubuntu;
     font-size: 1rem;
     background-color: white;
     color: black;
+    scroll-snap-align: center;
 }
 
-.motion_wrapper {
-   /*  display: flex; */
-
+.carousel {
+    display: flex;
+    gap: 1rem;
+    height: min-content;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
 }
 
+.carousel::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+.carousel::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 10px;
+}
+.carousel::-webkit-scrollbar-track {
+    background: transparent;
+}
 .name {
     font-size: 3rem;
     font-weight: 700;
@@ -50,13 +68,13 @@
 .set_item {
     /* border: 3px solid rgb(210, 210, 210); */
     border-radius: 15px;
-    padding: 2rem 1rem;
+    padding: 1rem 1rem;
     color: black;
     display: flex;
     gap: 0.5rem;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0px 5px 10px 1px rgba(190, 190, 190, 0.463);
+    box-shadow: 0px 3px 8px 3px rgba(190, 190, 190, 0.374);
     background-color: rgb(247, 247, 247);
 }
 
@@ -138,6 +156,23 @@
     width: 2rem;
 }
 
+.control_btn {
+    cursor: pointer;
+    width: fit-content;
+    border: none;
+    background-color: rgb(247, 247, 247);
+    padding: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-radius: 15px;
+    color: inherit;
+    margin: 1rem 0 0 auto;
+}
+
+.control_btn:disabled {
+    color: rgb(219, 219, 219);
+}
+
 .plus_svg {
     color: rgba(128, 128, 128, 0.163);
     width: 60px;
@@ -147,3 +182,13 @@
     cursor: pointer;
 }
 
+@media only screen and (max-width: 500px) {
+    .carousel::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+      }
+    .carousel::-webkit-scrollbar-thumb {
+        background: none;
+        border-radius: 0px;
+    }
+} 

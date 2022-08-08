@@ -66,7 +66,7 @@ const Preset = () => {
     <div className={styles.carousel}>
         {exerciseData?.map((item, index) => {
             return (
-                <div className={styles.exercise_wrapper}>
+                <div key={index} className={styles.exercise_wrapper}>
                     <ExerciseName exerciseData={exerciseData} currExercise={index} setExerciseData={setExerciseData} />
                     <SetList currExercise={index} exerciseData={exerciseData} setExerciseData={setExerciseData} />
                     <button onClick={() => addExercise(index)} className={styles.control_btn}>Add exercise</button>

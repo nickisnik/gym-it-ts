@@ -53,7 +53,7 @@ const PresetOverview = () => {
       </div>
       {preset?.exercises.map((item : any, index : number) => {
         return (
-          <div className={styles.exercise_wrapper}>
+          <div className={styles.exercise_wrapper} key={index}>
             <span className={styles.exercise_name}>{item.name}</span>
             <span className={styles.exercise_sets}>{item.sets.length} sets</span>
           </div>

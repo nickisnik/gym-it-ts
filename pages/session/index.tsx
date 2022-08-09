@@ -1,9 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import styles from '../styles/Session.module.css'
-import Preset from './[preset]'
+import styles from '../../styles/Session.module.css'
 import { useRouter } from 'next/router'
-const exerciseJson = require('../components/exercises.json')
-
 const Session = () => {
   const [presetIndex, setPresetIndex] = useState<Number>()
   const router = useRouter();
